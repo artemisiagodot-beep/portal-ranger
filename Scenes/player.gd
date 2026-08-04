@@ -6,7 +6,6 @@ class_name Player extends CharacterBody3D
 
 func _ready() -> void:
 	health_component.died.connect(_on_died)
-
 func _physics_process(delta: float) -> void:
 	#Read controls
 	input_component.update()
