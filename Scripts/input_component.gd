@@ -5,6 +5,9 @@ var jump_pressed := false
 var hurt_pressed := false
 var heal_pressed := false
 
+func _ready() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
 func update() -> void:
 	move_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	jump_pressed = Input.is_action_just_pressed("jump")
