@@ -4,7 +4,7 @@ class_name Player extends CharacterBody3D
 @onready var movement_component: MovementComponent = %MovementComponent
 @onready var health_component: HealthComponent = %HealthComponent
 @onready var camera_rotation: CameraRotation = %CameraRotation
-
+@onready var spring_arm_3d_interpolation: SpringArm3DInterpolation = $SpringArm3DInterpolation
 
 func _physics_process(delta: float) -> void:
 	# Read controls
@@ -16,7 +16,6 @@ func _physics_process(delta: float) -> void:
 	
 	#Rotate Camera
 	camera_rotation.frame_camera_rotation()
-	if input_component.hurt_pressed:
-		health_component.damage(10)
-	if input_component.heal_pressed:
-		health_component.heal(10)
+	spring_arm_3d_interpolation.sprint_arm_interpolation(delta)
+	
+	

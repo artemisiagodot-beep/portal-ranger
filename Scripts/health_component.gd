@@ -22,4 +22,3 @@ func heal(amount: float) -> void:
 
 func _emit() -> void:
 	health_changed.emit(current_health, max_health)
-	print("HP: %d / %d" % [current_health, max_health])
