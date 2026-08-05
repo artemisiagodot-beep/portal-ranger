@@ -1,12 +1,12 @@
 class_name StateMachine
 extends Node
 
-enum State { IDLE, WALK, JUMP_START, IN_AIR, LANDING }
+enum State { IDLE, WALK, JUMP_START, IN_AIR, LANDING, DEAD }
 
 @onready var input_component: InputComponent = %InputComponent
 @onready var movement_component: MovementComponent = %MovementComponent
 @onready var animation_manager: AnimationManager = %AnimationManager
-
+@onready var health_component: HealthComponent = %HealthComponent
 var state: State = State.IDLE
 signal state_changed(old_state: State, new_state: State)
 
@@ -15,7 +15,9 @@ const LANDING_DURATION := 0.25
 
 var landing_timer := 0.0
 
+
 func _ready() -> void:
+	health_component.died.connect(_on_died)
 	_enter_state(state)
 
 func _physics_process(delta: float) -> void:
@@ -31,6 +33,12 @@ func _physics_process(delta: float) -> void:
 		state_changed.emit(old_state, state)
 
 func _get_next_state() -> State:
+	# check for beign dead
+	if state == State.DEAD:
+		return State.DEAD
+	if health_component.current_health <= 0.0:
+		return State.DEAD
+
 	var on_floor := movement_component.body.is_on_floor()
 
 	match state:
@@ -76,9 +84,17 @@ func _enter_state(new_state: State) -> void:
 		State.LANDING:
 			animation_manager.play_landing()
 			landing_timer = LANDING_DURATION
+		State.DEAD:
+			animation_manager.play_dead()
+			movement_component.enabled = false
+			movement_component.body.velocity = Vector3.ZERO
 
-func _exit_state(_old_state: State) -> void:
-	pass
+func _exit_state(old_state: State) -> void:
+	if old_state == State.DEAD:
+		movement_component.enabled = true
 
 func get_state_name() -> String:
 	return State.keys()[state]
+
+func _on_died() -> void:
+	print("player is dead")

@@ -10,9 +10,13 @@ class_name MovementComponent extends Node
 @export var gravity_multiplier := 3.0
 
 var wants_jump := false
+var enabled := true
 
 func tick(delta: float) -> void:
 	if body == null:
+		return
+	if not enabled:
+		wants_jump = false
 		return
 
 	var direction := Vector3.ZERO
@@ -34,7 +38,7 @@ func tick(delta: float) -> void:
 
 	body.move_and_slide()
 
-	# Face movement direction (delegated, not duplicated)
+	# Face movement direction 
 	if look_towards_direction and direction.length_squared() > 0.001:
 		look_towards_direction.look_towards_direction(direction, delta)
 

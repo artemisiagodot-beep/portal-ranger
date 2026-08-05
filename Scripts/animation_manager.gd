@@ -12,3 +12,5 @@ func play_landing() -> void:
 	animation_player.play("Rig_Medium_MovementBasic/Jump_Land")
 func play_in_air() -> void:
 	animation_player.play("Rig_Medium_MovementBasic/Jump_Idle")
+func play_dead() -> void:
+	animation_player.play("Rig_Medium_General/Death_A")
