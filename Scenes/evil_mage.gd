@@ -1,5 +1,8 @@
 extends CharacterBody3D
-@onready var animation_manager: AnimationManager = $AnimationManager
+
+@onready var input_component: InputComponent = $InputComponent
+@onready var movement_component: MovementComponent = $MovementComponent
 
 func _physics_process(delta: float) -> void:
-	animation_manager.play_idle()
+	input_component.update()
+	movement_component.tick(delta)

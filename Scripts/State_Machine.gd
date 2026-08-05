@@ -3,10 +3,10 @@ extends Node
 
 enum State { IDLE, WALK, JUMP_START, IN_AIR, LANDING, DEAD }
 @export var death_timer: float = 1.0
-@onready var input_component: InputComponent = %InputComponent
 @onready var movement_component: MovementComponent = %MovementComponent
 @onready var animation_manager: AnimationManager = %AnimationManager
 @onready var health_component: HealthComponent = %HealthComponent
+@onready var input_component: InputComponent = %InputComponent
 var state: State = State.IDLE
 signal state_changed(old_state: State, new_state: State)
 
