@@ -4,8 +4,7 @@ class_name Player extends CharacterBody3D
 @onready var movement_component: MovementComponent = %MovementComponent
 @onready var health_component: HealthComponent = %HealthComponent
 @onready var camera_rotation: CameraRotation = %CameraRotation
-func _ready() -> void:
-	health_component.died.connect(_on_died)
+
 
 func _physics_process(delta: float) -> void:
 	# Read controls
@@ -21,6 +20,3 @@ func _physics_process(delta: float) -> void:
 		health_component.damage(10)
 	if input_component.heal_pressed:
 		health_component.heal(10)
-
-func _on_died() -> void:
-	print("player is dead")
