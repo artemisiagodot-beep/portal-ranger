@@ -33,7 +33,6 @@ func _physics_process(delta: float) -> void:
 		state_changed.emit(old_state, state)
 
 func _get_next_state() -> State:
-	# check for beign dead
 	if state == State.DEAD:
 		return State.DEAD
 	if health_component.current_health <= 0.0:

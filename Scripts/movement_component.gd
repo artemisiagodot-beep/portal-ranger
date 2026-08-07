@@ -11,12 +11,15 @@ class_name MovementComponent extends Node
 
 var wants_jump := false
 var enabled := true
+var look_override_direction: Vector3 = Vector3.ZERO
 
 func tick(delta: float) -> void:
 	if body == null:
 		return
 	if not enabled:
 		wants_jump = false
+		if look_towards_direction and look_override_direction.length_squared() > 0.001:
+			look_towards_direction.look_towards_direction(look_override_direction, delta)
 		return
 
 	var direction := Vector3.ZERO

@@ -6,6 +6,9 @@ class_name Player extends CharacterBody3D
 @onready var camera_rotation: CameraRotation = %CameraRotation
 @onready var spring_arm_3d_interpolation: SpringArm3DInterpolation = $SpringArm3DInterpolation
 
+func take_damage(amount: float) -> void:
+	health_component.damage(amount)
+
 func _physics_process(delta: float) -> void:
 	# Read controls
 	input_component.update()
